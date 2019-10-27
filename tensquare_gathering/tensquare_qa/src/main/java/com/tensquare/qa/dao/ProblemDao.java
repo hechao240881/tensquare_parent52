@@ -1,11 +1,10 @@
 package com.tensquare.qa.dao;
 
+import com.tensquare.qa.pojo.Problem;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-
-import com.tensquare.qa.pojo.Problem;
 import org.springframework.data.jpa.repository.Query;
 
 
