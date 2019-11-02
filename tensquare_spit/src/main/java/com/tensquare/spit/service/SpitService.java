@@ -43,6 +43,10 @@ public class SpitService {
         return spitDao.findById(id).get();
     }
 
+    /**
+     * 保存吐槽
+     * @param spit
+     */
     public void save(Spit spit){
         spit.set_id(idWorker.nextId()+"");
         spit.set_id(idWorker.nextId()+"");
