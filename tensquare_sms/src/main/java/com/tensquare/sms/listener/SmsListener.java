@@ -33,13 +33,13 @@ public class SmsListener {
         String checkcode = map.get("checkcode");
         System.out.println("手机号："+map.get("mobile"));
         System.out.println("验证码："+map.get("checkcode"));
+        /**
+         * mobile:手机号
+         * template_code：模板号
+         * sign_name 签名
+         * param 验证码 K是短信模板详情里的字符串替换，V是验证码
+         */
         try {
-            /**
-             * mobile:手机号
-             * template_code：模板号
-             * sign_name 签名
-             * param 验证码 K是短信模板详情里的字符串替换，V是验证码
-             */
             smsUtil.sendSms(mobile,template_code,sign_name,"{\"checkcode\":\""+checkcode+"\"}");
         } catch (ClientException e) {
             e.printStackTrace();

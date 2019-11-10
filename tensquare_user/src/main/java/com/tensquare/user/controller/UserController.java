@@ -32,11 +32,12 @@ public class UserController {
 	@RequestMapping(value = "/register/{code}",method = RequestMethod.POST)
 	public Result regist(@PathVariable String code,@RequestBody User user){
 		//得到缓存中的验证码
-		String checkcodeRedis = (String) redisTemplate.opsForValue().get("checkcode_" + user.getMobile());
-		if (checkcodeRedis.isEmpty()){
+		String checkCodeRedis = (String) redisTemplate.opsForValue().get("checkcode_" + user.getMobile());
+		System.out.println("验证码是："+checkCodeRedis);
+		if (checkCodeRedis.isEmpty()){
 			return new Result(false,StatusCode.ERROR,"请先获取手机验证码");
 		}
-		if (!checkcodeRedis.equals(code)){
+		if (!checkCodeRedis.equals(code)){
 			return new Result(false,StatusCode.ERROR,"请输入正确的验证码");
 		}
 
@@ -123,9 +124,7 @@ public class UserController {
 
 	@RequestMapping(value = "/sendsms/{mobile}",method = RequestMethod.POST)
 	public Result sendSms(@PathVariable String mobile){
-		if (mobile != null && mobile != "") {
-			userService.sendSms(mobile);
-		}
+		userService.sendSms(mobile);
 		return new Result(true,StatusCode.OK,"发送成功");
 	}
 }

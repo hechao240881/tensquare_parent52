@@ -37,19 +37,19 @@ public class UserService {
     private RabbitTemplate rabbitTemplate;
 
 
-
+    //发送手机验证码
 	public void sendSms(String mobile){
 		//生成六位随机数
-        String checkCode = RandomStringUtils.randomNumeric(6);
+        String checkcode = RandomStringUtils.randomNumeric(6);
         //向缓存中放一份,K值为生成的六位随机数和手机号码，6小时内有效
-        redisTemplate.opsForValue().set("checkCode_"+mobile, checkCode,6,TimeUnit.HOURS);
+        redisTemplate.opsForValue().set("checkcode_"+mobile, checkcode,6,TimeUnit.HOURS);
         //给用户发一份
         Map<String, String> map = new HashMap<>();
         map.put("mobile",mobile);
-        map.put("checkCode",checkCode);
+        map.put("checkcode",checkcode);
         rabbitTemplate.convertAndSend("sms",map);
         //在控制台显示一份（方便测试）
-        System.out.println("验证码为：" + checkCode);
+        System.out.println("验证码为：" + checkcode);
     }
 
 
