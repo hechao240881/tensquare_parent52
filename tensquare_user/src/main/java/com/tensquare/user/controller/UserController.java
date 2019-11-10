@@ -127,4 +127,13 @@ public class UserController {
 		userService.sendSms(mobile);
 		return new Result(true,StatusCode.OK,"发送成功");
 	}
+
+	@RequestMapping(value = "/login",method = RequestMethod.POST)
+	public Result login(@RequestBody User user){
+		user = userService.login(user.getMobile(),user.getPassword());
+		if (user == null){
+			return new Result(false,StatusCode.LOGINERROR,"登入失败");
+		}
+		return new Result(true,StatusCode.OK,"登入成功");
+	}
 }

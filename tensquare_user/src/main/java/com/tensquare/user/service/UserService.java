@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import util.IdWorker;
 
@@ -36,6 +37,9 @@ public class UserService {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
+    @Autowired
+    private BCryptPasswordEncoder encoder;
+
 
     //发送手机验证码
 	public void sendSms(String mobile){
@@ -47,7 +51,7 @@ public class UserService {
         Map<String, String> map = new HashMap<>();
         map.put("mobile",mobile);
         map.put("checkcode",checkcode);
-        rabbitTemplate.convertAndSend("sms",map);
+//        rabbitTemplate.convertAndSend("sms",map);
         //在控制台显示一份（方便测试）
         System.out.println("验证码为：" + checkcode);
     }
@@ -105,8 +109,9 @@ public class UserService {
      * @param user
      */
     public void add(User user) {
-        user.setId(idWorker.nextId() + "");
         user.setId(idWorker.nextId()+"");
+        //密码加密
+        user.setPassword(encoder.encode(user.getPassword()));
         user.setFollowcount(0);//关注数
         user.setFanscount(0);//粉丝数
         user.setOnline(0L);//在线时长
@@ -187,4 +192,11 @@ public class UserService {
 
     }
 
+    public User login(String mobile,String password) {
+        User user = userDao.findByMobile(mobile);
+        if (user != null && encoder.matches(password,user.getPassword())){
+            return user;
+        }
+        return null;
+    }
 }

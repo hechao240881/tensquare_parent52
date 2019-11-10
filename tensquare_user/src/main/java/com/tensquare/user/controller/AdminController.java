@@ -1,4 +1,5 @@
 package com.tensquare.user.controller;
+
 import com.tensquare.user.pojo.Admin;
 import com.tensquare.user.service.AdminService;
 import entity.PageResult;
@@ -6,7 +7,9 @@ import entity.Result;
 import entity.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import util.IdWorker;
 
 import java.util.Map;
 /**
@@ -21,8 +24,26 @@ public class AdminController {
 
 	@Autowired
 	private AdminService adminService;
-	
-	
+
+	@Autowired
+	private BCryptPasswordEncoder encoder;
+
+	@Autowired
+	private IdWorker idWorker;
+
+
+	/**
+	 * 登入
+	 */
+	@RequestMapping(value = "/login",method = RequestMethod.POST)
+	public Result login(@RequestBody Admin admin){
+		Admin adminLogin = adminService.login(admin);
+		if (adminLogin == null ){
+			return new Result(false,StatusCode.LOGINERROR,"登入失败");
+		}
+		//使得前后端可以通话的操作，采用 JWT 来实现
+		return new Result(true,StatusCode.OK,"登入成功");
+	}
 	/**
 	 * 查询全部数据
 	 * @return
@@ -72,6 +93,9 @@ public class AdminController {
 	 */
 	@RequestMapping(method=RequestMethod.POST)
 	public Result add(@RequestBody Admin admin  ){
+		admin.setId(idWorker.nextId()+"");
+		//密码加密
+		admin.setPassword(encoder.encode(admin.getPassword()));
 		adminService.add(admin);
 		return new Result(true,StatusCode.OK,"增加成功");
 	}
