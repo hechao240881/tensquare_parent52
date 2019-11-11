@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
+import util.JwtUtil;
 
 import java.util.Map;
 /**
@@ -22,6 +23,9 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private JwtUtil jwtUtil;
 
 	@Autowired
 	private RedisTemplate redisTemplate;
@@ -109,6 +113,7 @@ public class UserController {
 	}
 	
 	/**
+	 * 删除 必须有admin角色才能删除
 	 * 删除
 	 * @param id
 	 */

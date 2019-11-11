@@ -15,3 +15,7 @@ spring:
     host: 127.0.0.1
   rabbitmq:
     host: 127.0.0.1
+jtw:
+  config:
+   key: itcast
+   ttl: 3600000

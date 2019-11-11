@@ -12,8 +12,10 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import util.IdWorker;
+import util.JwtUtil;
 
 import javax.persistence.criteria.Predicate;
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -39,6 +41,12 @@ public class UserService {
 
     @Autowired
     private BCryptPasswordEncoder encoder;
+
+    @Autowired
+    private HttpServletRequest request;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
 
     //发送手机验证码
@@ -136,6 +144,10 @@ public class UserService {
      * @param id
      */
     public void deleteById(String id) {
+        String token = (String) request.getAttribute("claims_admin");
+        if (token == null || "".equals(token)){
+            throw new RuntimeException("权限不足！");
+        }
         userDao.deleteById(id);
     }
 

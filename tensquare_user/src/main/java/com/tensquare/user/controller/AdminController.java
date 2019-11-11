@@ -10,7 +10,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import util.IdWorker;
+import util.JwtUtil;
 
+import java.util.HashMap;
 import java.util.Map;
 /**
  * 控制器层
@@ -29,7 +31,13 @@ public class AdminController {
 	private BCryptPasswordEncoder encoder;
 
 	@Autowired
+	public JwtUtil jwtUtil;
+
+	@Autowired
 	private IdWorker idWorker;
+
+
+
 
 
 	/**
@@ -42,7 +50,11 @@ public class AdminController {
 			return new Result(false,StatusCode.LOGINERROR,"登入失败");
 		}
 		//使得前后端可以通话的操作，采用 JWT 来实现
-		return new Result(true,StatusCode.OK,"登入成功");
+		String token = jwtUtil.createJWT(adminLogin.getId(), adminLogin.getLoginname(), "admin");
+		Map<String,Object> map = new HashMap<>();
+		map.put("token",token);
+		map.put("role","admin");
+		return new Result(true,StatusCode.OK,"登入成功",map);
 	}
 	/**
 	 * 查询全部数据
@@ -112,6 +124,7 @@ public class AdminController {
 	}
 	
 	/**
+	 *
 	 * 删除
 	 * @param id
 	 */
