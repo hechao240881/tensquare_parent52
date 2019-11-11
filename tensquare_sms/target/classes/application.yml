@@ -1,0 +1,13 @@
+server:
+  port: 9009
+spring:
+  application:
+    name: tensquare-sms
+  rabbitmq:
+    host: 127.0.0.1
+aliyun:
+  sms:
+   accessKeyId: LTAI4Fdv21qmTx2AVFKv5kAQ #阿里云的个人用户信息管理 accessKeyId
+   accessKeySecret: zvFPo5Z2ZV0ULqOlmHPvPMeXgeQgre #阿里云的个人 accessKeySecret（API密钥）
+   template_code: SMS_177250912 #模板CODE
+   sign_name: 十次方  #签名
