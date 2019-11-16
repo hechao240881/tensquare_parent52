@@ -10,7 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -21,7 +20,7 @@ public class LabelController {
     private LabelService labelService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public Result findAll(){
+    public Result findAllLabel(){
         return new Result(true, StatusCode.OK,"查询成功",labelService.findAll());
     }
 

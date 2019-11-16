@@ -1,0 +1,22 @@
+server:
+  port: 6868
+eureka:
+  client:
+   registerWithEureka: false
+   fetchRegistry: false
+   service-url:
+    defaultZone: http://${spring.application.name}:${server.port}/eureka/
+  instance:
+    instance-id: tensquare-eureka   #自定义服务名称信息
+    prefer-ip-address: true         #访问路径可以显示IP地址,跨域访问
+spring:
+  application:
+    name: tensquare‐base
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/tensquare_base?characterEncoding=utf-8&useSSL=false
+    username: root
+    password: root
+jpa:
+  database: MySQL
+  show‐sql: true

@@ -1,4 +1,5 @@
 package com.tensquare.qa.controller;
+import com.tensquare.qa.com.tensquare.qa.client.BaseClient;
 import com.tensquare.qa.pojo.Problem;
 import com.tensquare.qa.service.ProblemService;
 import entity.PageResult;
@@ -16,11 +17,27 @@ import java.util.Map;
  */
 @RestController
 @CrossOrigin
-@RequestMapping("/problem")
+@RequestMapping(value = "/problem")		//使用Feign跨域调用最好写上value=""
 public class ProblemController {
 
 	@Autowired
 	private ProblemService problemService;
+
+	//localhost:9003/problem/label/
+	@Autowired
+	private BaseClient baseClient;
+
+	@RequestMapping("/label/{labelId}")
+	public Result findByLabelId(@PathVariable String labelId){
+		Result byId = baseClient.findById(labelId);
+		return new Result(true,StatusCode.OK,"查询成功",byId);
+	}
+
+	@RequestMapping(value = "/label",method = RequestMethod.GET)
+	public Result findAllLabel(){
+		Result byId = baseClient.findAllLabel();
+		return new Result(true,StatusCode.OK,"查询成功",byId);
+	}
 
 	@RequestMapping(value = "/newlist/{labelid}/{page}/{size}",method = RequestMethod.GET)
 	public Result newlist(@PathVariable String labelid,@PathVariable int page,@PathVariable int size){

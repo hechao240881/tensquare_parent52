@@ -2,7 +2,7 @@ server:
   port: 9001
 spring:
   application:
-    name: tensquare‐base #指定服务名
+    name: base
   datasource:
     driverClassName: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/tensquare_base?characterEncoding=utf-8&useSSL=false
@@ -11,3 +11,10 @@ spring:
 jpa:
   database: MySQL
   show‐sql: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:6868/eureka/
+  instance:
+    prefer-ip-address: true     #访问路径可以显示IP地址,跨域访问
