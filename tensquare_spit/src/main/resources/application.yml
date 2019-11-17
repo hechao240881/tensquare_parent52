@@ -3,6 +3,11 @@ server:
 spring:
   application:
     name: tensquare‐spit #指定服务名
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/tensquare_article?characterEncoding=UTF8&useSSL=false
+    username: root
+    password: root
   data:
     mongodb:
       host: 192.168.43.4
