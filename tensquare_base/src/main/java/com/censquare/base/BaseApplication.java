@@ -9,9 +9,11 @@ import util.IdWorker;
 @SpringBootApplication
 @EnableEurekaClient
 public class BaseApplication {
-    public static void main(String[] args) {
+        public static void main(String[] args) {
         SpringApplication.run(BaseApplication.class);
     }
+
+
 
     @Bean
     public IdWorker idWorker(){

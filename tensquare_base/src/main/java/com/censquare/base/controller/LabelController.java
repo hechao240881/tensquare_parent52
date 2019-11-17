@@ -6,21 +6,35 @@ import entity.PageResult;
 import entity.Result;
 import entity.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
 @CrossOrigin
+@RefreshScope //bus 默认不支持自定义的配置文件,此注解可开启
 @RequestMapping("/label")
 public class LabelController {
 
     @Autowired
     private LabelService labelService;
 
+    @Autowired
+    private HttpServletRequest request;
+
+    @Value("${ip}")
+    private String ip;
+
     @RequestMapping(method = RequestMethod.GET)
     public Result findAllLabel(){
+        //获取头信息
+        String header = request.getHeader("Authorization");
+        System.out.println(header);
+        System.out.println("ip 为:"+ip);
         return new Result(true, StatusCode.OK,"查询成功",labelService.findAll());
     }
 

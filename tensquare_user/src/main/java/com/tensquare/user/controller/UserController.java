@@ -31,6 +31,15 @@ public class UserController {
 	private RedisTemplate redisTemplate;
 
 	/**
+	 * 更新好友粉丝数和用户关注数
+	 */
+	@RequestMapping(value = "/{userid}/{friendid}/{x}",method = RequestMethod.PUT)
+	public void updateFanscountandfollowcount(@PathVariable String userid,@PathVariable String friendid,@PathVariable int x){
+		userService.updateupdateFanscountandfollowcount(x,userid,friendid);
+
+	}
+
+	/**
 	 * 注册
 	 */
 	@RequestMapping(value = "/register/{code}",method = RequestMethod.POST)
