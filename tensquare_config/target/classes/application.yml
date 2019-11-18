@@ -1,0 +1,49 @@
+server:
+  port: 12000
+
+spring:
+  application:
+    name: config
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/tensquare_base?characterEncoding=utf-8&useSSL=false
+    username: root
+    password: root
+  cloud:
+    config:
+#      name: base
+#      profile: dev
+#      label: master
+      server:
+        git:
+          uri: https://gitee.com/he_zhi_jie/tensquare_dev84.git
+          username: 18617597271
+          password: hechao240881
+#          force-pull: true
+#          search-paths: /**
+#          basedir: target/config
+#          skip-ssl-validation: true
+#          timeout: 100
+#          default-label: master
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:6868/eureka/
+
+
+#配置bus 必须用到 rabbit
+rabbitmq:
+  host: 127.0.0.1
+  username: guest
+  password: guest
+
+#配置 bus,暴露出发消息总线的地址
+management:
+  endpoints:
+    web:
+      exposure:
+        include: bus-refresh
+
+
+

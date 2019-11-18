@@ -18,3 +18,11 @@ public class ConfigApplication {
         SpringApplication.run(ConfigApplication.class);
     }
 }
+
+
+
+/*
+    使用 bus 刷新配置文件,以post方式提交
+    http://127.0.0.1:12000/actuator/bus-refresh
+
+ */

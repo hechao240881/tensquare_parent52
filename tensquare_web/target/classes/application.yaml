@@ -1,0 +1,30 @@
+server:
+  port: 9012
+
+spring:
+  application:
+    name: web
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/tensquare_base?characterEncoding=utf-8&useSSL=false
+    username: root
+    password: root
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:6868/eureka/
+  instance:
+    prefer-ip-address: true     #访问路径可以显示IP地址,跨域访问
+
+zuul:
+  routes:
+    tensquare-base:
+      path: /bash/**
+      serviceId: base
+    tensquare-user:
+      path: /user/**
+      serviceId: user
+    tensquare-qa:
+      path: /qa/**
+      serviceId: qa
